@@ -8,6 +8,10 @@ import SideBar from './sidebar/SideBar.js';
 import TopBar from './topbar/TopBar.js';
 import Editor from './editor/Editor.js';
 
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001');
+socket.on('connected', msg => console.log('connected', msg));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'row',
+    overflowY: 'hidden',
   }
 }));
 
@@ -30,7 +35,7 @@ function App() {
       <CssBaseline />
       <TopBar />
       <div className={classes.main}>
-        <SideBar />
+        <SideBar socket={socket} />
         <Editor />
       </div>
     </div>

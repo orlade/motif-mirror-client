@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SideBar() {
+export default function SideBar({socket}) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -77,7 +77,7 @@ export default function SideBar() {
                 </IconButton>
             </div>
             <Divider />
-            <Workspace />
+            <Workspace socket={socket} />
         </Drawer>
     );
 }
