@@ -2,7 +2,6 @@ import React from 'react';
 import './TextEditor.css';
 
 import {makeStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     content: {

@@ -54,14 +54,14 @@ function App() {
       console.debug(`» Reflection of ${file}`, reflection);
       setReflection(reflection);
     });
-  }, [socket, file]);
+  }, [file, format]);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <TopBar />
       <div className={classes.main}>
-        <SideBar socket={socket} onFileSelect={onFileSelect} onFormatSelect={onFormatSelect} />
+        <SideBar socket={socket} file={file} format={format} onFileSelect={onFileSelect} onFormatSelect={onFormatSelect} />
         <Editor content={reflection.content} format={format} />
       </div>
     </div>

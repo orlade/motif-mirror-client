@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DescriptionIcon from '@material-ui/icons/Description';
 
-export default function Workspace({socket, onFileSelect}) {
+export default function Workspace({socket, file, onFileSelect}) {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function Workspace({socket, onFileSelect}) {
     return (
         <List>
             {projects.map(({name, path}, index) => (
-                <ListItem button key={name} title={name} onClick={e => onFileSelect(path)}>
+                <ListItem button key={name} title={name} selected={path === file} onClick={e => onFileSelect(path)}>
                     <ListItemIcon><DescriptionIcon /></ListItemIcon>
                     <ListItemText primary={name} />
                 </ListItem>
