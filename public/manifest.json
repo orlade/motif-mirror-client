@@ -1,0 +1,15 @@
+{
+  "short_name": "Mirror",
+  "name": "Motif Mirror",
+  "icons": [
+    {
+      "src": "star.png",
+      "type": "image/png",
+      "sizes": "2000x1942"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
