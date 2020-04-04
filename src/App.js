@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 import {makeStyles} from '@material-ui/core/styles';
@@ -30,13 +30,39 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
 
+  const [file, setFile] = useState();
+  const [format, setFormat] = useState('text');
+  const [reflection, setReflection] = useState({});
+
+  // Invoked when a file is selected for viewing.
+  const onFileSelect = file => {
+    setFile(file);
+  };
+
+  // Invoked when a viewing format is selected.
+  const onFormatSelect = format => {
+    setFormat(format);
+  };
+
+  useEffect(() => {
+    if (!file) return;
+
+    console.debug(`« Reflect ${format} of ${file}`);
+    socket.emit('reflect', {path: file});
+
+    socket.on('reflection', reflection => {
+      console.debug(`» Reflection of ${file}`, reflection);
+      setReflection(reflection);
+    });
+  }, [socket, file]);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <TopBar />
       <div className={classes.main}>
-        <SideBar socket={socket} />
-        <Editor />
+        <SideBar socket={socket} onFileSelect={onFileSelect} onFormatSelect={onFormatSelect} />
+        <Editor content={reflection.content} format={format} />
       </div>
     </div>
   );

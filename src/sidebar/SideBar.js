@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './SideBar.css';
 
 import clsx from 'clsx';
@@ -44,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SideBar({socket}) {
+export default function SideBar(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+
+    const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -77,7 +78,7 @@ export default function SideBar({socket}) {
                 </IconButton>
             </div>
             <Divider />
-            <Workspace socket={socket} />
+            <Workspace {...props} />
         </Drawer>
     );
 }

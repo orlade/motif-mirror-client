@@ -1,5 +1,7 @@
 import React from 'react';
 import './Editor.css';
+import Diagram from '../diagram/Diagram.js';
+import TextEditor from '../texteditor/TextEditor';
 
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,14 +13,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MiniDrawer() {
+export default function Editor({content, format}) {
     const classes = useStyles();
 
     return (
         <main className={classes.content}>
-            <Typography paragraph>
-                [content]
-            </Typography>
+            {!content
+                ? <Typography paragraph>Select a file to view</Typography>
+                : format === 'diagram'
+                    ? <Diagram content={content}></Diagram>
+                    : <TextEditor content={content}></TextEditor>}
         </main>
     );
 }
