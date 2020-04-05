@@ -48,7 +48,7 @@ function App() {
     if (!file) return;
 
     console.debug(`« Reflect ${format} of ${file}`);
-    socket.emit('reflect', {path: file});
+    socket.emit('reflect', {path: file, type: format});
 
     socket.on('reflection', reflection => {
       console.debug(`» Reflection of ${file}`, reflection);
