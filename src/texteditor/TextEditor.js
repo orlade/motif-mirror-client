@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         fontSize: '10pt',
         fontFamily: 'monospace',
+        overflowY: 'scroll',
     },
 }));
 
@@ -17,7 +18,7 @@ export default function TextEditor({content}) {
 
     return (
         <main className={classes.content}>
-            {content}
+            {JSON.stringify(content)}
         </main>
     );
 }
