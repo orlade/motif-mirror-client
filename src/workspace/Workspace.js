@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import './Workspace.css';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
 import DescriptionIcon from '@material-ui/icons/Description';
+import FolderIcon from '@material-ui/icons/Folder';
+import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 
 export default function Workspace({socket, file, onFileSelect}) {
     const [projects, setProjects] = useState([]);
@@ -18,14 +18,23 @@ export default function Workspace({socket, file, onFileSelect}) {
         });
     }, [socket]);
 
+    const renderTree = ({name, path, children = []}) => (
+        <TreeItem key={name} nodeId={name} label={name} onClick={e => onFileSelect(path)}>
+            {children.map(renderTree)}
+        </TreeItem>
+    );
+
     return (
-        <List>
-            {projects.map(({name, path}, index) => (
-                <ListItem button key={name} title={name} selected={path === file} onClick={e => onFileSelect(path)}>
-                    <ListItemIcon><DescriptionIcon /></ListItemIcon>
-                    <ListItemText primary={name} />
-                </ListItem>
-            ))}
-        </List>
+        projects.map(({name, path, items}) =>
+            <TreeView
+                key={name}
+                defaultExpanded={[name]}
+                defaultCollapseIcon={<FolderOpenIcon />}
+                defaultExpandIcon={<FolderIcon />}
+                defaultEndIcon={<DescriptionIcon />}
+            >
+                {renderTree({name, path, children: items})}
+            </TreeView>
+        )
     );
 }
