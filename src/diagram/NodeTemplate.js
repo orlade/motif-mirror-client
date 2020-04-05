@@ -47,15 +47,17 @@ const nodeHoverAdornment =
     $(go.Adornment, "Spot",
         {
             background: "transparent",
-            mouseLeave: function(e, obj) {
-                obj.part.adornedPart.removeAdornment("mouseHover");
-            }
+            mouseLeave: (e, obj) => obj.part.adornedPart.removeAdornment("mouseHover"),
         },
         $(go.Placeholder, {background: "transparent"}),
         $("Button",
-            {alignment: go.Spot.Right, alignmentFocus: go.Spot.Left},
-            {click: addNodeAndLink},
-            $(go.TextBlock, "+")));
+            {
+                alignment: go.Spot.Right,
+                alignmentFocus: go.Spot.Left,
+                click: addNodeAndLink,
+            },
+            $(go.TextBlock, "+")
+        ));
 
 const getNextId = diagram => {
     function getMaxId(items) {
@@ -77,57 +79,35 @@ export default $(go.Node, "Auto",
     $(go.Shape, {fill: "lightyellow"}),
     $(go.Panel, "Table",
         {defaultRowSeparatorStroke: "black"},
-        // header
         $(go.TextBlock,
             {
-                row: 0, columnSpan: 2, margin: 3, alignment: go.Spot.Center,
+                row: 0,
+                columnSpan: 2,
+                margin: 3,
+                alignment: go.Spot.Center,
                 font: "bold 12pt sans-serif",
-                isMultiline: false, editable: true
+                isMultiline: false,
+                editable: true
             },
             new go.Binding("text", "name").makeTwoWay()),
-        // properties
-        $(go.TextBlock, "Properties",
-            {row: 1, font: "italic 10pt sans-serif"},
-            new go.Binding("visible", "visible", function(v) {
-                return !v;
-            }).ofObject("PROPERTIES")),
-        $(go.Panel, "Vertical", {name: "PROPERTIES"},
+        $(go.Panel, "Vertical",
             new go.Binding("itemArray", "properties"),
             {
-                row: 1, margin: 3, stretch: go.GraphObject.Fill,
-                defaultAlignment: go.Spot.Left, background: "lightyellow",
+                row: 1,
+                margin: 3,
                 itemTemplate: propertyTemplate
             }
         ),
-        /*
-        $("PanelExpanderButton", "PROPERTIES",
-          { row: 1, column: 1, alignment: go.Spot.TopRight, visible: false },
-          new go.Binding("visible", "properties", function (arr) { return arr.length > 0; })),
-        */
-        // methods
-        $(go.TextBlock, "Methods",
-            {row: 2, font: "italic 10pt sans-serif"},
-            new go.Binding("visible", "visible", function(v) {
-                return !v;
-            }).ofObject("METHODS")),
-        $(go.Panel, "Vertical", {name: "METHODS"},
+        $(go.Panel, "Vertical",
             new go.Binding("itemArray", "methods"),
             {
                 row: 2,
                 margin: 3,
-                stretch: go.GraphObject.Fill,
-                defaultAlignment: go.Spot.Left,
-                background: "lightyellow",
                 itemTemplate: methodTemplate,
             }
         ),
-        /*
-        $("PanelExpanderButton", "METHODS",
-          { row: 2, column: 1, alignment: go.Spot.TopRight, visible: false },
-          new go.Binding("visible", "methods", function (arr) { return arr.length > 0; }))
-        */
     ),
-    { // show the Adornment when a mouseHover event occurs
+    {
         mouseHover: function(e, obj) {
             var node = obj.part;
             nodeHoverAdornment.adornedObject = node;

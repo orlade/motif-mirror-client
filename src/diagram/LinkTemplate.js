@@ -3,11 +3,10 @@ import propertyTemplate from './PropertyTemplate'
 import * as go from 'gojs';
 const $ = go.GraphObject.make;
 
-export default $(go.Link,  // the whole link panel
-    $(go.Shape,  // the link shape
-        {stroke: "black"}),
-    $(go.Shape,  // the arrowhead
-        {toArrow: "standard", stroke: null}),
+export default $(go.Link,
+    $(go.Shape, {stroke: "black"}),
+    $(go.Shape, {toArrow: "standard", stroke: null}),
+
     $(go.Panel, "Auto",
         $(go.Shape, "RoundedRectangle", {fill: "#fff6"}),
         $(go.Panel, "Table",
@@ -34,6 +33,7 @@ export default $(go.Link,  // the whole link panel
         ),
         new go.Binding("visible", "", ({label}) => !!label),
     ),
+
     // ID
     $(go.TextBlock,
         {
