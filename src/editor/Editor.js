@@ -1,5 +1,6 @@
 import React from 'react';
 import './Editor.css';
+
 import Diagram from '../diagram/Diagram.js';
 import TextEditor from '../texteditor/TextEditor';
 
@@ -10,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
     content: {
         display: 'flex',
         flexGrow: 1,
-        justifyContent: 'center',
         alignItems: 'stretch',
+        overflowX: 'auto',
     },
 }));
 
