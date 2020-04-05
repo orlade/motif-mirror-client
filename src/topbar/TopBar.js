@@ -6,6 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -23,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
     },
+    title: {
+        flexGrow: 1,
+    },
+    user: {
+        cursor: 'pointer',
+    },
 }));
 
 export default function TopBar() {
@@ -34,9 +41,10 @@ export default function TopBar() {
             className={clsx(classes.appBar)}
         >
             <Toolbar>
-                <Typography variant="h6" noWrap>
+                <Typography variant="h5" noWrap className={classes.title}>
                     Mirror
                 </Typography>
+                <AccountCircleIcon fontSize="large" className={classes.user} />
             </Toolbar>
         </AppBar>
     );
