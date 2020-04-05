@@ -21,8 +21,8 @@ export default function SideBar(props) {
 
     return (
         <div className={classes.container}>
-            <MiniDrawer content={<Workspace {...props} />} />
-            <MiniDrawer content={<FormatList {...props} />} />
+            <MiniDrawer content={<Workspace key="workspace" {...props} />} />
+            <MiniDrawer content={<FormatList key="formats" {...props} />} />
         </div >
     );
 }
