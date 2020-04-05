@@ -13,6 +13,12 @@ import io from 'socket.io-client';
 const socket = io('http://localhost:3001');
 socket.on('connected', msg => console.log('connected', msg));
 
+let onReflection = () => {};
+socket.on('reflection', reflection => {
+  console.debug(`» Reflection of ${reflection.source}`, reflection);
+  onReflection(reflection);
+});
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
@@ -34,6 +40,9 @@ function App() {
   const [format, setFormat] = useState('text');
   const [reflection, setReflection] = useState({});
 
+  // Invoked with each reflection that is received.
+  onReflection = setReflection;
+
   // Invoked when a file is selected for viewing.
   const onFileSelect = file => {
     setFile(file);
@@ -49,11 +58,6 @@ function App() {
 
     console.debug(`« Reflect ${format} of ${file}`);
     socket.emit('reflect', {path: file, type: format});
-
-    socket.on('reflection', reflection => {
-      console.debug(`» Reflection of ${file}`, reflection);
-      setReflection(reflection);
-    });
   }, [file, format]);
 
   return (
