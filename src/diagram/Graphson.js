@@ -1,14 +1,14 @@
 export default function toGraphson(diagram) {
     const nodes = diagram.model.nodeDataArray;
     const vertexes = nodes.map(node => {
-        const [_, label, id] = node.name.match(/(.+) \((\d+)\)/);
+        const [, label, id] = node.name.match(/(.+) \((\d+)\)/);
         const vertex = {
             id,
             label,
             properties: {},
         };
         node.properties.forEach(prop => {
-            const [_, key, value] = prop.name.match(/([^:]+): (.+)/);
+            const [, key, value] = prop.name.match(/([^:]+): (.+)/);
             if (!(key in vertex.properties)) {
                 vertex.properties[key] = [];
             }
@@ -20,7 +20,6 @@ export default function toGraphson(diagram) {
 
     const links = diagram.model.linkDataArray;
     links.forEach(link => {
-        // == so that int and string IDs are equal.
         const edge = {
             id: link.id,
             inV: link.to,
@@ -28,18 +27,18 @@ export default function toGraphson(diagram) {
             properties: {},
         };
         link.properties.forEach(p => {
-            const [_, key, value] = p.name.match(/([^:]+): (.+)/);
+            const [, key, value] = p.name.match(/([^:]+): (.+)/);
             edge.properties[key] = value;
         });
 
-        const outV = vertexes.find(v => v.id == link.from);
+        const outV = vertexes.find(v => _idEqual(v.id, link.from));
         outV.outE = outV.outE || {};
         if (!(link.label in outV.outE)) {
             outV.outE[link.label] = [];
         }
         outV.outE[link.label].push(edge);
 
-        const inV = vertexes.find(v => v.id == link.to);
+        const inV = vertexes.find(v => _idEqual(v.id, link.to));
         inV.inE = inV.inE || {};
         if (!(link.label in inV.inE)) {
             inV.inE[link.label] = [];
@@ -52,3 +51,5 @@ export default function toGraphson(diagram) {
 
     return JSON.stringify(vertexes);
 }
+
+const _idEqual = (a, b) => `${a}` === `${b}`;

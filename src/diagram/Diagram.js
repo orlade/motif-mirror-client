@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Diagram.css';
 
-import * as go from 'gojs';
 import {ReactDiagram} from 'gojs-react';
 
 import initDiagram from './Config'
 import handleModelChange from './Change'
 
-export default function Diagram({content}) {
+export default function Diagram({socket, path, content}) {
+    const [diagram, setDiagram] = useState();
+
+    const initAndSetDiagram = () => {
+        const newDiagram = initDiagram();
+        setDiagram(newDiagram);
+        return newDiagram;
+    }
+
     return (
         <ReactDiagram
-            initDiagram={initDiagram}
+            initDiagram={initAndSetDiagram}
             divClassName='diagram-component'
             nodeDataArray={content.nodes}
             linkDataArray={content.links}
-            onModelChange={handleModelChange}
+            onModelChange={changes => handleModelChange.bind(diagram)(path, changes, socket)}
         />
     );
 }

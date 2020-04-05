@@ -66,7 +66,7 @@ function App() {
       <TopBar />
       <div className={classes.main}>
         <SideBar socket={socket} file={file} format={format} onFileSelect={onFileSelect} onFormatSelect={onFormatSelect} />
-        <Editor content={reflection.content} format={format} />
+        <Editor socket={socket} path={reflection.source} content={reflection.content} format={format} />
       </div>
     </div>
   );

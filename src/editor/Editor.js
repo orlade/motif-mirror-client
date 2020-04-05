@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Editor({content, format}) {
+export default function Editor(props) {
+    const {content, format} = props;
     const classes = useStyles();
 
     const renderEmptyMessage = () => (
@@ -28,8 +29,8 @@ export default function Editor({content, format}) {
             {!content
                 ? renderEmptyMessage()
                 : format === 'diagram'
-                    ? <Diagram content={content}></Diagram>
-                    : <TextEditor content={content}></TextEditor>}
+                    ? <Diagram {...props}></Diagram>
+                    : <TextEditor {...props}></TextEditor>}
         </main>
     );
 }
