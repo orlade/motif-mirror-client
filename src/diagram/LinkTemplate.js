@@ -3,9 +3,20 @@ import propertyTemplate from './PropertyTemplate'
 import * as go from 'gojs';
 const $ = go.GraphObject.make;
 
+const typeArrows = {
+    'inheritance': 'Triangle',
+}
+
+const typeArrowFills = {
+    'inheritance': 'white',
+}
+
 export default $(go.Link,
     $(go.Shape, {stroke: "black"}),
-    $(go.Shape, {toArrow: "standard", stroke: null}),
+    $(go.Shape, {stroke: "black", toArrow: "standard"},
+        new go.Binding("toArrow", "type", type => typeArrows[type] || "standard"),
+        new go.Binding("fill", "type", type => typeArrowFills[type] || "black"),
+    ),
 
     $(go.Panel, "Auto",
         $(go.Shape, "RoundedRectangle", {fill: "#fff6"}),
