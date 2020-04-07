@@ -57,7 +57,7 @@ function App() {
     if (!file) return;
 
     console.debug(`« Reflect ${format} of ${file}`);
-    socket.emit('reflect', {path: file, type: format});
+    socket.emit('reflect', {uri: file, type: format});
   }, [file, format]);
 
   return (
