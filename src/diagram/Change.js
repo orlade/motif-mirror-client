@@ -24,6 +24,7 @@ export default function handleModelChange(path, changes, socket) {
 
     _save(path, json, socket);
 }
+
 const hashCode = string => {
     let hash = 0, i, chr;
     for (i = 0; i < string.length; i++) {
